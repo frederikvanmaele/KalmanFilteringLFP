@@ -1,14 +1,15 @@
+%% Demo script for Unscented Kalman Filter on data SCM
 clear
 close all
 
 %Choose model P0, P1, 2RC, 3RC, 3RC-P0
-model = "P1";
+model = "3RC-P0";
 
-%Choose the module(s)
-cells = 1:49;
+%Choose the module(s): modules 1-10 available
+cells = 1;
 
 %Choose the day
-start_points = 1:5;
+days = 1:5;
 
 %Choose the initial offset on the SoC.
 % -1 -> -5%
@@ -34,11 +35,11 @@ for day = days
     rho = 1e1;
     
     std_soc = 0.05;
-    std_current = 100;
+    std_current = 1000;
     
     est_volt = 0;
     std_volt = 10;    
-    str_input = strcat("../../../Data/MAROKKO/Clean_Data/Day", num2str(day), "_clean.mat");
+    str_input = strcat("../Data/MAROKKO/Day", num2str(day), "_clean_selected_cells.mat");
     input = struct2cell(load(str_input));
     input = input{1};
     input.SOC = input.SOC_Ah/100;

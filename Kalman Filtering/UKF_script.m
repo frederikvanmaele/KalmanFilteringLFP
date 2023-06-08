@@ -1,9 +1,10 @@
+%% Demo script for Unscented Kalman Filter (single cell) on race data
 clear
 close all
 %Choose model P0, P1, 2RC, 3RC, 3RC-P0
-model = "P1";
+model = "3RC-P0";
 
-%Choose the sample cell(s)
+%Choose the sample cell(s): sample cells 1-3
 cells = 1:3;
 
 %Choose the starting point(s)
@@ -53,7 +54,7 @@ for start_point = start_points
             start_point
             error_soc
             cell
-            str_input = strcat("../../../Data/RACE/Cel", num2str(cell), "/input_race_full.mat");
+            str_input = strcat("Data/RACE/Cel", num2str(cell), "/input_race_full.mat");
             input = struct2cell(load(str_input));
             input = input{1};
             UKF_main;

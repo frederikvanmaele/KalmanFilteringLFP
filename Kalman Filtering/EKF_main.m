@@ -178,7 +178,7 @@ output = table(SOC_kalman, SOC_real, SOC_error, SOC_Uncertainty, V_kalman, V_rea
 %%
 if visuals
     figure
-    super_title = strcat("Performance UKF: ", model);
+    super_title = strcat("Performance EKF: ", model);
     sgtitle(super_title);
     ax1 = subplot(4, 1, 1);
     plot(input.Time, output.("V_real"), "LineWidth", 1)
@@ -193,6 +193,8 @@ if visuals
     plot(input.Time, output.("SOC_real"), "LineWidth", 1)
     hold on
     plot(input.Time, output.("SOC_kalman"), "LineWidth", 1)
+    plot(input.Time, output.("SOC_kalman")+output.("SOC_Uncertainty"), "--r", "LineWidth", 0.5)
+    plot(input.Time, output.("SOC_kalman")-output.("SOC_Uncertainty"), "--r", "LineWidth", 0.5)    
     legend("Real", "Kalman")
     title("SoC")
     xlabel("Time [s]")
@@ -208,15 +210,18 @@ if visuals
     grid on
     ax4 = subplot(4, 1, 4);
     plot(input.Time, output.("SOC_error"), "LineWidth", 1)
+    hold on
+    plot(input.Time, zeros(length(input.Time), 1), "--", "LineWidth", 1)
     title("SoC Error")
     linkaxes([ax1 ax2 ax3 ax4], 'x')
     xlabel("Time [s]")
     ylabel("SoC [-]")
+    ylim(ax4, [-max(abs(output.("SOC_error"))), max(abs(output.("SOC_error")))])
     title("Error on SoC")    
     grid on
     
     figure()
-    super_title = strcat("Output UKF: ", model);
+    super_title = strcat("Output EKF: ", model);
     sgtitle(super_title)
     ax1 = subplot(2, 1, 1);
     plot(input.Time, output.("V_real"))

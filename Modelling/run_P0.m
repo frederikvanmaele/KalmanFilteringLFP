@@ -1,13 +1,13 @@
-%% P0
+%% Test P0-model on race data single cell system
 clear
 close all
 
 parameters = struct2cell(load("Parameters/P0/Best_P0_11_03-08_56_.mat"));
 
-% Choose the input-output sequence to compare the model with
-input = struct2cell(load("../Data/RACE/Cel1/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel2/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel3/input_race_full.mat"));
+% Choose the input-output sequence to compare the model with (1-3)
+cell = 1;
+input_str = strcat("../Data/RACE/Cel", num2str(cell), "/input_race_full.mat");
+input = struct2cell(load(input_str));
 
 
 parameters = parameters{1};
@@ -119,7 +119,7 @@ hold on
 plot(result_final.Time, ocv_final.Data, "LineWidth", 1)
 xlabel("Time [s]")
 ylabel("Voltage [mV]")
-title("Model vs. Target Voltage")
+title("Model vs. Target Voltage P0-model")
 legend("Model", "Target", "OCV")
 grid("on")
 

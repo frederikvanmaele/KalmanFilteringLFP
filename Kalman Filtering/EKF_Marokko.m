@@ -1,11 +1,12 @@
+%% Demo script for Extended Kalman Filter on data SCM
 clear
 close all
 
 %Choose model P0, P1, 2RC, 3RC, 3RC-P0
-model = "P1";
+model = "3RC-P0";
 
-%Choose the module(s)
-cells = 1:49;
+%Choose the module(s): modules 1-10 available
+cells = 1;
 
 %Choose the day
 days = 1:5;
@@ -22,7 +23,8 @@ marokko = true;
 %Choose if visuals should be displayed
 visuals = true;
 
-soc_estimations = [0.993, 0.639, 0.477, 0.373, 0.301];  
+soc_estimations = [0.993, 0.639, 0.477, 0.373, 0.301];
+
 for day = days  
     offset_index = 1;
     est_current = 0;
@@ -33,11 +35,11 @@ for day = days
     rho = 1e1;
     
     std_soc = 0.05;
-    std_current = 100;
+    std_current = 1000;
     
     est_volt = 0;
-    std_volt = 10;    
-    str_input = strcat("../Data/MAROKKO/Day", num2str(day), "_clean.mat");
+    std_volt = 10;
+    str_input = strcat("../Data/MAROKKO/Day", num2str(day), "_clean_selected_cells.mat");
     input = struct2cell(load(str_input));
     input = input{1};
     input.SOC = input.SOC_Ah/100;
@@ -67,7 +69,7 @@ for day = days
     grid on
     xlabel("Time [s]")
     ylabel("SoC [-]")
-    title(strcat("Accuracy of UKF & ", model, "-model  on data SCM: day ", num2str(day)))
+    title(strcat("Accuracy of EKF & ", model, "-model  on data SCM: day ", num2str(day)))
 end
 %%
 

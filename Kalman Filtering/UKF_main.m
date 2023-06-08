@@ -1,9 +1,11 @@
-%% Framework for Extended Kalman Filter
+%% Framework for Unscented Kalman Filter
 %%
 dir = "../Parameters/";
 folder = strcat("../Parameters/", model);
 if model == "2RC"
-    parameters = struct2cell(load(strcat(folder, "/Bell(load(strcat(folder, "/Best_3RC-03_03-22_05.mat")));
+    parameters = struct2cell(load(strcat(folder, "/Best_2RC_03_03-15_44.mat")));    
+elseif model == "3RC"
+    parameters = struct2cell(load(strcat(folder, "/Best_3RC-03_03-22_05.mat")));
 elseif model == "P0"
     parameters = struct2cell(load(strcat(folder, "/Best_P0_11_03-08_56.mat")));
 elseif model == "P1"
@@ -16,7 +18,6 @@ ocv_table = table_from_csv(ocv_table);
 
 parameters = parameters{1};
 parameters.OCV = ocv_table.Avg_avg_OCV*1000;
-%To mV and to compensate for scaling
 parameters.dOCV = ocv_table.Avg_avg_dOCV*1000*1000; 
 
 if marokko
@@ -266,10 +267,13 @@ if visuals
     grid on
     ax4 = subplot(4, 1, 4);
     plot(input.Time, output.("SOC_error"), "LineWidth", 1)
+    hold on
+    plot(input.Time, zeros(length(input.Time), 1), "--", "LineWidth", 1)
     title("SoC Error")
     linkaxes([ax1 ax2 ax3 ax4], 'x')
     xlabel("Time [s]")
     ylabel("SoC [-]")
+    ylim(ax4, [-max(abs(output.("SOC_error"))), max(abs(output.("SOC_error")))])
     title("Error on SoC")    
     grid on
     

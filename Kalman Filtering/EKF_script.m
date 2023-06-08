@@ -1,9 +1,10 @@
+%% Demo script for Extended Kalman Filter (single cell) on race data
 clear
 close all
 %Choose model P0, P1, 2RC, 3RC, 3RC-P0
-model = "P1";
+model = "3RC-P0";
 
-%Choose the sample cell(s)
+%Choose the sample cell(s): sample cells 1-3
 cells = 1:3;
 
 %Choose the starting point(s)
@@ -22,6 +23,7 @@ marokko = false;
 visuals = true;
 
 results = zeros(length(cells), length(errors_soc), length(start_points));
+
 for start_point = start_points
     for error_soc = errors_soc
         if start_point == 1
@@ -35,7 +37,6 @@ for start_point = start_points
             est_current = 1000;
             est_current3 = 1000;
         end
-    
 
         Rk = 1e5;
         rho = 1e1;
@@ -44,7 +45,7 @@ for start_point = start_points
         std_current = 1000;
         
         est_volt = 0;
-        std_volt = 1;    
+        std_volt = 10;    
         for cell = cells
             model
             start_point

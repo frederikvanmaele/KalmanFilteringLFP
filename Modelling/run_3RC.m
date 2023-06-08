@@ -1,13 +1,13 @@
-%% 3RC
+%% Test 3RC-model on race data single cell system
 clear
 close all
 
 parameters = struct2cell(load("Parameters/3RC/Best_3RC-03_03-22_05.mat"));
 
-% Choose the input-output sequence to compare the model with
-input = struct2cell(load("../Data/RACE/Cel1/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel2/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel3/input_race_full.mat"));
+% Choose the input-output sequence to compare the model with (1-3)
+cell = 3;
+input_str = strcat("../Data/RACE/Cel", num2str(cell), "/input_race_full.mat");
+input = struct2cell(load(input_str));
 
 parameters = parameters{1};
 SOC_levels = parameters.("SOC_levels");
@@ -24,13 +24,6 @@ R3 = parameters.("R3");
 model = "Models/Model_3RC.slx";
 
 %%
-% Tabel maken met cross MSE -> één set parameters volstaat voor elk van
-% deze cellen
-
-% Juistheid op HPPC minder dan op RACE door tuning parameters (instellen
-% boundaries)
-
-
 input = input{1};
 input.("Voltage(V)") = input.("Voltage(V)")*1000;
 
@@ -142,6 +135,6 @@ hold on
 plot(input.Time, ocv_int, "LineWidth", 1)
 xlabel("Time [s]")
 ylabel("Voltage [mV]")
-title("Model vs. Target Voltage")
+title("Model vs. Target Voltage 3RC-model")
 legend("Model", "Target", "OCV")
 grid("on")

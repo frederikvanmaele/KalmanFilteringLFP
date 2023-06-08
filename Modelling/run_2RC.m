@@ -1,17 +1,16 @@
-%% 2RC
+%% Test 2RC-model on race data single cell system
 clear
 close all
 
 parameters = struct2cell(load("Parameters/2RC/Best_2RC_03_03-15_44.mat"));
 
-% Choose the input-output sequence to compare the model with
-input = struct2cell(load("../Data/RACE/Cel1/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel2/input_race_full.mat"));
-%input = struct2cell(load("../Data/RACE/Cel3/input_race_full.mat"));
+% Choose the input-output sequence to compare the model with (1-3)
+cell = 1;
+input_str = strcat("../Data/RACE/Cel", num2str(cell), "/input_race_full.mat");
+input = struct2cell(load(input_str));
 
 parameters = parameters{1};
 SOC_levels = parameters.("SOC_levels");
-%SOC_OCV = SOC_levels;
 OCV = parameters.("OCV");
 tau1 = parameters.("tau1");
 tau2 = parameters.("tau2");
@@ -123,6 +122,6 @@ hold on
 plot(input.Time, ocv_int, "LineWidth", 1)
 xlabel("Time [s]")
 ylabel("Voltage [mV]")
-title("Target Voltage vs. OCV")
+title("Model vs. Target Voltage 2RC-model")
 legend("Model", "Target", "OCV")
 grid("on")
