@@ -3,10 +3,9 @@ Demo repository for the thesis "Using Kalman filtering techniques to obtain a be
 
 Author: Frederik Vanmaele
 
-Promotor: Prof. Dr. Ir. Bart De Moor
+Supervisor: prof. dr. ir. Bart De Moor
 
-Supervisor: Ir. Mauricio Agudelo
-
+Assistant-supervisor: dr. ir. Oscar Mauricio Agudelo
 
 # Data
 Input-output sequences that are used in the Kalman Filtering or Modelling demos.
@@ -27,5 +26,9 @@ EKF_script runs the EKF_main file for the BWSC race data obtained in the lab on 
 EKF_Marokko runs the EKF_main file with the real data of the Solar Challenge Morocco. 
 ## UKF
 Completely analogue.
+
+## UKF toolbox
+- schol function
+- table_from_csv helper function
 
 
